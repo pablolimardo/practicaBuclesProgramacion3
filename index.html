@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practica Escritorio · Programacion 3° 2°</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{--bg:#f2f6f3;--bg2:#e6ede8;--card:#fff;--gr:#166534;--gr2:#14532d;--gr3:#dcfce7;--gr4:#f0fdf4;--dk:#0f2318;--muted:#5a7a62;--border:#c6dbc9;--dim:#dde8df;--txt:#0f2318;--am:#b45309;--am2:#78350f;--am3:#fef3c7;--am4:#fffbeb;--bl:#1d4ed8;--bl2:#1e40af;--bl3:#dbeafe;--bl4:#eff6ff;--re:#b91c1c;--re3:#fee2e2;--mo:#7c3aed;--mo3:#ede9fe;--mono:"IBM Plex Mono",monospace;--sans:"Plus Jakarta Sans",sans-serif;}
+[data-theme="dark"]{--bg:#0a140d;--bg2:#0f1c12;--card:#0c1810;--gr:#22d3a0;--gr2:#16a87e;--gr3:#062414;--gr4:#041008;--dk:#e8f5ec;--muted:#4a6450;--border:#1a3020;--dim:#152418;--txt:#d0e8d4;--am:#f0a030;--am2:#d4820a;--am3:#2a1a06;--am4:#1c1208;--bl:#60a5fa;--bl2:#3b82f6;--bl3:#1e3a5f;--bl4:#0f1f40;--re:#fca5a5;--re3:#1f0a0a;--mo:#c4b5fd;--mo3:#2e1065;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--txt);font-size:16px;line-height:1.7;overflow-x:hidden;}
+.topbar{position:sticky;top:0;z-index:300;background:var(--card);border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:8px 16px;gap:8px;}
+.tb-brand{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tb-brand b{color:var(--dk);}
+.tb-acts{display:flex;gap:6px;flex-shrink:0;}
+.tbtn{background:var(--bg2);border:1.5px solid var(--border);color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:5px 11px;border-radius:20px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.tbtn:hover{border-color:var(--gr);color:var(--gr);}
+.hero{background:var(--dk);padding:44px 16px 36px;}
+.hero-in{max-width:960px;margin:0 auto;}
+.hero-eye{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.eye-dot{width:6px;height:6px;border-radius:50%;background:var(--gr);box-shadow:0 0 8px var(--gr);animation:pulse 2s ease infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-size:clamp(22px,5vw,42px);font-weight:800;color:#fff;line-height:1.05;margin-bottom:10px;}
+.h-gr{color:#86efac;}
+.hero-desc{color:rgba(255,255,255,.5);font-size:14px;max-width:560px;margin-bottom:20px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:12px;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);}
+.tag-gr{border-color:rgba(134,239,172,.35);color:rgba(134,239,172,.85);}
+.tag-am{border-color:rgba(251,191,36,.3);color:rgba(251,191,36,.8);}
+.tag-mo{border-color:rgba(196,181,253,.35);color:rgba(196,181,253,.85);}
+nav{background:var(--card);border-bottom:2px solid var(--border);position:sticky;top:45px;z-index:90;}
+.nav-in{max-width:960px;margin:0 auto;display:flex;overflow-x:auto;padding:0 12px;}
+.nav-in::-webkit-scrollbar{height:0;}
+.nb{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:10px 11px;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;}
+.nb:hover,.nb.on{color:var(--gr);border-bottom-color:var(--gr);}
+main{max-width:960px;margin:0 auto;padding:30px 16px 80px;}
+section{margin-bottom:64px;}
+.hora-hdr{border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.hh1{background:var(--gr);}
+.hh2{background:var(--am2);}
+.hh3{background:var(--mo);}
+.hora-ico{font-size:24px;}
+.hora-tit{font-size:18px;font-weight:800;color:#fff;}
+.hora-sub{font-size:13px;color:rgba(255,255,255,.65);font-family:var(--mono);}
+.act{background:var(--card);border:1.5px solid var(--border);border-radius:14px;margin-bottom:20px;overflow:hidden;}
+.act-hdr{display:grid;grid-template-columns:56px 1fr auto;align-items:center;border-bottom:1.5px solid var(--border);}
+.act-num{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:22px;font-weight:800;color:var(--gr);height:60px;}
+.act-meta{padding:12px 8px;}
+.act-tag{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.act-tit{font-size:14px;font-weight:700;color:var(--dk);}
+.act-dif{font-family:var(--mono);font-size:10px;padding:3px 11px;border-radius:10px;margin-right:14px;white-space:nowrap;}
+.d1{background:var(--gr3);color:var(--gr2);}
+.d2{background:var(--am3);color:var(--am2);}
+.d3{background:var(--re3);color:var(--re);}
+.act-body{padding:18px 20px;}
+.enunciado{font-size:14px;color:var(--txt);margin-bottom:12px;line-height:1.7;}
+.enunciado b{color:var(--gr2);}
+.code{background:#f0f4f1;color:#1a2e22;border-radius:8px;padding:13px 15px;font-family:var(--mono);font-size:13px;margin:10px 0;line-height:1.95;white-space:pre;overflow-x:auto;border:1.5px solid var(--border);}
+.cm{color:#5a8a68;font-style:italic;}
+.kw{color:#14532d;font-weight:700;}
+.st{color:#a14f00;}
+.nm{color:#1d4ed8;}
+.fn{color:#6d28d9;}
+.fmt-hint{display:inline-flex;align-items:center;gap:5px;background:var(--am4);border:1px solid var(--am3);border-radius:8px;padding:5px 10px;font-size:12px;color:var(--am2);font-family:var(--mono);margin-bottom:10px;flex-wrap:wrap;}
+.fmt-hint b{color:var(--am2);}
+.escritorio{background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:15px 17px;margin-top:12px;}
+.esc-lbl{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gr2);margin-bottom:6px;font-weight:700;}
+.esc-grid{display:grid;gap:8px;margin-top:8px;}
+.esc-row{display:flex;align-items:stretch;gap:8px;}
+.esc-step{font-family:var(--mono);font-size:11px;background:var(--gr);color:#fff;border-radius:6px;padding:5px 9px;min-width:110px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;text-align:center;line-height:1.3;}
+.esc-col{flex:1;display:flex;flex-direction:column;gap:3px;}
+.esc-hint{font-family:var(--mono);font-size:10px;color:var(--muted);padding-left:4px;}
+.esc-line{width:100%;border:none;border-bottom:2px solid var(--border);background:transparent;font-family:var(--mono);font-size:13px;color:var(--txt);padding:4px 6px;outline:none;}
+.esc-line:focus{border-bottom-color:var(--gr);}
+.check-btn{background:var(--gr);color:#fff;border:none;font-family:var(--sans);font-size:13px;font-weight:700;padding:8px 18px;border-radius:7px;cursor:pointer;margin-top:10px;transition:background .2s;}
+.check-btn:hover{background:var(--gr2);}
+.esc-fb{display:none;margin-top:9px;padding:10px 13px;border-radius:7px;font-size:13px;line-height:1.6;white-space:pre-wrap;}
+.esc-fb.show{display:block;}
+.fb-ok{background:var(--gr4);color:var(--gr2);border:1.5px solid var(--gr3);}
+.fb-mal{background:var(--re3);color:var(--re);border:1.5px solid #fca5a5;}
+.resp-area{width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:7px;font-family:var(--mono);font-size:12px;padding:9px 12px;color:var(--txt);resize:vertical;min-height:80px;outline:none;margin-top:8px;line-height:1.8;}
+.resp-area:focus{border-color:var(--gr);}
+.reveal-btn{background:var(--bg2);border:1.5px solid var(--border);color:var(--muted);font-family:var(--sans);font-size:12px;font-weight:600;padding:7px 14px;border-radius:7px;cursor:pointer;margin-top:6px;transition:all .2s;}
+.reveal-btn:hover{border-color:var(--gr);color:var(--gr);}
+.solucion{display:none;margin-top:8px;background:var(--gr4);border:1.5px solid var(--gr3);border-radius:7px;padding:11px 14px;font-family:var(--mono);font-size:12px;color:var(--gr2);white-space:pre-wrap;line-height:1.8;}
+.solucion.show{display:block;}
+.chip{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:9px;font-weight:700;margin-right:3px;}
+.cg{background:var(--gr3);color:var(--gr2);}
+.ca{background:var(--am3);color:var(--am2);}
+.cm2{background:var(--mo3);color:var(--mo);}
+footer{text-align:center;padding:24px;border-top:1.5px solid var(--border);color:var(--muted);font-family:var(--mono);font-size:11px;background:var(--bg2);}
+footer b{color:var(--dk);}
+@media(max-width:640px){h1{font-size:22px;}main{padding:20px 13px 60px;}.act-num{font-size:18px;height:52px;}.code{font-size:11px;}nav{top:44px;}.nb{font-size:9px;padding:9px 8px;}.esc-step{min-width:80px;font-size:10px;}}
+@media(min-width:641px){.hero{padding:48px 24px 38px;}main{padding:32px 24px 90px;}}
+@media print{@page{margin:1.5cm 1.2cm;}*{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+body{background:#fff!important;color:#000!important;font-size:9.5pt;}
+.topbar,nav,.tbtn,.check-btn,.reveal-btn{display:none!important;}
+.hero{background:#0f2318!important;padding:10pt 0 8pt!important;}
+h1{color:#fff!important;font-size:16pt;}.h-gr{color:#fff!important;}
+.hero-desc,.hero-eye,.hero-tags{display:none!important;}
+.act{border:1pt solid #ccc!important;background:#fff!important;break-inside:avoid;margin-bottom:8pt;}
+.act-hdr{border-bottom:1pt solid #ccc!important;}.act-num{color:#000!important;}.act-tit{color:#000!important;}
+.code{background:#f8f8f8!important;color:#000!important;border:1pt solid #ddd!important;border-left:2pt solid #555!important;font-size:7.5pt!important;padding:5pt!important;}
+.escritorio{background:#f8f8f8!important;border:1pt solid #ccc!important;}
+.esc-step{background:#444!important;color:#fff!important;}
+.esc-line{border-bottom:1pt solid #aaa!important;}
+.esc-hint{color:#555!important;}
+.fmt-hint{background:#fff8e6!important;border:1pt solid #ddd!important;color:#555!important;}
+.resp-area{border:1pt solid #ccc!important;min-height:50pt;}
+.solucion{display:block!important;background:#f0f8f0!important;border:1pt solid #ccc!important;}
+section{break-inside:avoid;}.hora-hdr{background:#333!important;}}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-brand">Esc. Industrial N&deg;9 &middot; <b>Taller de Programaci&oacute;n &middot; 3&deg; 2&deg; &middot; 2026</b></div>
+  <div class="tb-acts">
+    <button class="tbtn" id="themeBtn" onclick="toggleTheme()">&#9790; Oscuro</button>
+    <button class="tbtn" onclick="window.print()">&#128424; Imprimir</button>
+  </div>
+</div>
+<header class="hero">
+  <div class="hero-in">
+    <div class="hero-eye"><span class="eye-dot"></span>Taller de Programaci&oacute;n &middot; 3&deg; 2&deg; &middot; 3 horas c&aacute;tedra</div>
+    <h1>Pr&aacute;ctica de <span class="h-gr">Escritorio</span></h1>
+    <p class="hero-desc">for &middot; while &middot; listas &middot; append &middot; len &mdash; Traz&aacute; el c&oacute;digo l&iacute;nea por l&iacute;nea. Cada campo tiene una gu&iacute;a en gris que te dice qu&eacute; escribir.</p>
+    <div class="hero-tags">
+      <span class="tag tag-gr">for</span>
+      <span class="tag tag-gr">listas</span>
+      <span class="tag tag-gr">append</span>
+      <span class="tag tag-gr">len</span>
+      <span class="tag tag-gr">acumulador</span>
+      <span class="tag tag-am">while</span>
+      <span class="tag tag-am">while True</span>
+      <span class="tag tag-am">break</span>
+      <span class="tag tag-mo">menu</span>
+    </div>
+  </div>
+</header>
+<nav>
+  <div class="nav-in">
+    <button class="nb on" data-sec="h1" onclick="ir('h1')">Hora 1 &mdash; for</button>
+    <button class="nb" data-sec="h2" onclick="ir('h2')">Hora 2 &mdash; while</button>
+    <button class="nb" data-sec="h3" onclick="ir('h3')">Hora 3 &mdash; Integrador</button>
+  </div>
+</nav>
+<main>
+<section id="h1">
+<div class="hora-hdr hh1"><div class="hora-ico">&#128203;</div><div><div class="hora-tit">Hora 1 &mdash; for + listas</div><div class="hora-sub">5 actividades &middot; Recorrer &middot; if adentro &middot; append &middot; acumulador</div></div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">1</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip cg">for</span><span class="chip cg">listas</span> for sobre una lista</div>
+<div class="act-tit">Recorrer la maqueta zona por zona</div>
+</div>
+<div class="act-dif d1">Facil</div>
+</div>
+<div class="act-body">
+<p class="enunciado">La maqueta tiene cuatro zonas. El for recorre la lista e imprime cada una. <b>Anota en el papel que imprime en cada vuelta</b> y cuantas veces ejecuta el print().</p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; El texto exacto que imprime cada vuelta del for</div>
+<div class="code">zonas = [<span class="st">"Living"</span>, <span class="st">"Cocina"</span>, <span class="st">"Dormitorio"</span>, <span class="st">"Bano"</span>]
+
+<span class="kw">for</span> zona <span class="kw">in</span> zonas:
+    <span class="fn">print</span>(<span class="st">f"Revisando: {zona}"</span>)
+
+<span class="fn">print</span>(<span class="st">"Recorrido completo."</span>)</div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">vuelta 1</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; zona vale "Living" en la primera vuelta</div>
+<input class="esc-line" id="a1_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">vuelta 2</div>
+<div class="esc-col">
+<input class="esc-line" id="a1_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">vuelta 3</div>
+<div class="esc-col">
+<input class="esc-line" id="a1_2">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">vuelta 4</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; zona vale "Bano" en la ultima vuelta</div>
+<input class="esc-line" id="a1_3">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">al final</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Este print esta FUERA del for — se ejecuta una sola vez</div>
+<input class="esc-line" id="a1_4">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk1()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a1"></div>
+</div>
+</div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">2</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip cg">for</span><span class="chip cg">if</span> for + if + contador</div>
+<div class="act-tit">Contar cuantas zonas estan en alarma</div>
+</div>
+<div class="act-dif d1">Facil</div>
+</div>
+<div class="act-body">
+<p class="enunciado">El for recorre las temperaturas y cuenta cuantas superan el limite. <b>Para cada vuelta, indica si el if se cumple o no.</b> Si el if NO se cumple, escribe "nada".</p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; Escribe el texto del print o "nada" si el if no se cumple</div>
+<div class="code">temperaturas = [<span class="nm">22.5</span>, <span class="nm">31.0</span>, <span class="nm">19.8</span>, <span class="nm">28.5</span>]
+LIMITE = <span class="nm">25.0</span>
+alarmas = <span class="nm">0</span>
+
+<span class="kw">for</span> temp <span class="kw">in</span> temperaturas:
+    <span class="kw">if</span> temp > LIMITE:
+        alarmas += <span class="nm">1</span>
+        <span class="fn">print</span>(<span class="st">f"ALARMA: {temp} grados"</span>)
+
+<span class="fn">print</span>(<span class="st">f"Total alarmas: {alarmas}"</span>)</div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">temp=22.5</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 22.5 > 25? NO -> el if no se cumple</div>
+<input class="esc-line" id="a2_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">temp=31.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 31.0 > 25? SI -> imprime y suma 1 a alarmas</div>
+<input class="esc-line" id="a2_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">temp=19.8</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 19.8 > 25? NO -> el if no se cumple</div>
+<input class="esc-line" id="a2_2">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">temp=28.5</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 28.5 > 25? SI -> imprime y suma 1 a alarmas</div>
+<input class="esc-line" id="a2_3">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">al final</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; El print esta fuera del for — alarmas vale 2</div>
+<input class="esc-line" id="a2_4">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk2()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a2"></div>
+</div>
+</div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">3</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip cg">for</span><span class="chip cg">if/elif/else</span> for con if / elif / else</div>
+<div class="act-tit">Clasificar el estado de cada zona</div>
+</div>
+<div class="act-dif d2">Medio</div>
+</div>
+<div class="act-body">
+<p class="enunciado">El for clasifica cada temperatura en un estado. <b>Solo uno de los tres bloques (if / elif / else) se ejecuta por vuelta.</b> Anota cual se ejecuta en cada caso.</p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; Una sola linea por vuelta: el texto exacto del print()</div>
+<div class="code">lecturas = [<span class="nm">14.5</span>, <span class="nm">22.0</span>, <span class="nm">30.5</span>]
+
+<span class="kw">for</span> temp <span class="kw">in</span> lecturas:
+    <span class="kw">if</span> temp > <span class="nm">28.0</span>:
+        <span class="fn">print</span>(<span class="st">f"{temp}: CALOR"</span>)
+    <span class="kw">elif</span> temp >= <span class="nm">16.0</span>:
+        <span class="fn">print</span>(<span class="st">f"{temp}: CONFORT"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="st">f"{temp}: FRIO"</span>)</div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">temp=14.5</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 14.5 > 28? NO | 14.5 >= 16? NO -> else</div>
+<input class="esc-line" id="a3_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">temp=22.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 22.0 > 28? NO | 22.0 >= 16? SI -> elif</div>
+<input class="esc-line" id="a3_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">temp=30.5</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 30.5 > 28? SI -> if (no llega al elif ni al else)</div>
+<input class="esc-line" id="a3_2">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk3()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a3"></div>
+</div>
+</div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">4</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip cg">for</span><span class="chip cg">append</span> for + append() — construir una lista</div>
+<div class="act-tit">Guardar solo las zonas calientes</div>
+</div>
+<div class="act-dif d2">Medio</div>
+</div>
+<div class="act-body">
+<p class="enunciado">El programa recorre las temperaturas y guarda en una nueva lista solo las que superan el limite. <b>Traza el for y anota el estado de la lista "calientes" despues de cada vuelta.</b></p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; Lista completa al final: ["elem1", "elem2"] | o [] si esta vacia</div>
+<div class="code">temperaturas = [<span class="nm">18.0</span>, <span class="nm">31.5</span>, <span class="nm">24.0</span>, <span class="nm">29.8</span>]
+LIMITE = <span class="nm">27.0</span>
+calientes = []
+
+<span class="kw">for</span> temp <span class="kw">in</span> temperaturas:
+    <span class="kw">if</span> temp > LIMITE:
+        calientes.<span class="fn">append</span>(temp)
+
+<span class="fn">print</span>(<span class="st">"Zonas calientes:"</span>, calientes)
+<span class="fn">print</span>(<span class="st">"Cantidad:"</span>, <span class="fn">len</span>(calientes))</div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">tras temp=18.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 18.0 > 27? NO -> no hace append, sigue vacia</div>
+<input class="esc-line" id="a4_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">tras temp=31.5</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 31.5 > 27? SI -> append(31.5)</div>
+<input class="esc-line" id="a4_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">tras temp=24.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 24.0 > 27? NO -> no hace append</div>
+<input class="esc-line" id="a4_2">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">tras temp=29.8</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 29.8 > 27? SI -> append(29.8)</div>
+<input class="esc-line" id="a4_3">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">print calientes</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; La lista final con los dos valores</div>
+<input class="esc-line" id="a4_4">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">print len</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; len() cuenta cuantos hay en la lista</div>
+<input class="esc-line" id="a4_5">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk4()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a4"></div>
+</div>
+</div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">5</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip cg">for</span><span class="chip cg">acumulador</span> for + acumulador + len()</div>
+<div class="act-tit">Calcular el promedio de temperaturas</div>
+</div>
+<div class="act-dif d3">Dificil</div>
+</div>
+<div class="act-body">
+<p class="enunciado">El for suma todas las temperaturas en un acumulador. Despues calcula el promedio. <b>Para cada vuelta, anota el valor de "total" al terminar esa vuelta.</b> El promedio se calcula FUERA del for, despues de recorrer todo.</p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; Valor del acumulador "total" despues de cada suma | Resultado final del print()</div>
+<div class="code">temps = [<span class="nm">20.0</span>, <span class="nm">22.5</span>, <span class="nm">19.5</span>, <span class="nm">24.0</span>]
+total = <span class="nm">0</span>
+
+<span class="kw">for</span> t <span class="kw">in</span> temps:
+    total += t    <span class="cm"># lo mismo que: total = total + t</span>
+
+promedio = total / <span class="fn">len</span>(temps)
+<span class="fn">print</span>(<span class="st">f"Total: {total}"</span>)
+<span class="fn">print</span>(<span class="st">f"Cantidad: {len(temps)}"</span>)
+<span class="fn">print</span>(<span class="st">f"Promedio: {promedio}"</span>)</div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">inicio</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Valor antes de empezar el for</div>
+<input class="esc-line" id="a5_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">t=20.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 0 + 20.0 = 20.0</div>
+<input class="esc-line" id="a5_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">t=22.5</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 20.0 + 22.5 = 42.5</div>
+<input class="esc-line" id="a5_2">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">t=19.5</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 42.5 + 19.5 = 62.0</div>
+<input class="esc-line" id="a5_3">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">t=24.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 62.0 + 24.0 = 86.0</div>
+<input class="esc-line" id="a5_4">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">print total</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; El acumulador despues de sumar todo</div>
+<input class="esc-line" id="a5_5">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">print cant</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; len(temps) cuenta los elementos de la lista</div>
+<input class="esc-line" id="a5_6">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">print prom</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 86.0 / 4 = ?</div>
+<input class="esc-line" id="a5_7">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk5()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a5"></div>
+</div>
+</div></div>
+</section>
+<section id="h2">
+<div class="hora-hdr hh2"><div class="hora-ico">&#128260;</div><div><div class="hora-tit">Hora 2 &mdash; while</div><div class="hora-sub">4 actividades &middot; while con condicion &middot; while True + break &middot; patron del menu</div></div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">6</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip ca">while</span> while con contador</div>
+<div class="act-tit">La bomba trabaja mientras el nivel sea bajo</div>
+</div>
+<div class="act-dif d1">Facil</div>
+</div>
+<div class="act-body">
+<p class="enunciado">El while repite el bloque <b>mientras la condicion sea True</b>. Cuando la condicion se vuelve False, para. Traza el while vuelta por vuelta y determina cuantas veces ejecuta.</p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; El texto del print() en cada vuelta | O "nada" si no imprime</div>
+<div class="code">nivel = <span class="nm">3</span>
+
+<span class="kw">while</span> nivel < <span class="nm">7</span>:
+    <span class="fn">print</span>(<span class="st">f"Bomba ON — nivel actual: {nivel}"</span>)
+    nivel += <span class="nm">2</span>    <span class="cm"># la bomba sube el nivel 2 por ciclo</span>
+
+<span class="fn">print</span>(<span class="st">f"Bomba OFF — nivel final: {nivel}"</span>)</div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">nivel=3  3&lt;7?</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; SI -> entra al while. Al final de la vuelta nivel=5</div>
+<input class="esc-line" id="a6_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">nivel=5  5&lt;7?</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; SI -> entra al while. Al final de la vuelta nivel=7</div>
+<input class="esc-line" id="a6_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">nivel=7  7&lt;7?</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; NO -> 7 no es menor que 7 -> el while para</div>
+<input class="esc-line" id="a6_2">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">al final</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Este print esta fuera del while</div>
+<input class="esc-line" id="a6_3">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk6()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a6"></div>
+</div>
+</div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">7</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip ca">while</span><span class="chip ca">if</span> while con if adentro</div>
+<div class="act-tit">El sensor monitorea hasta alcanzar el objetivo</div>
+</div>
+<div class="act-dif d2">Medio</div>
+</div>
+<div class="act-body">
+<p class="enunciado">El while sigue corriendo y adentro hay un if que clasifica el estado. <b>Para cada vuelta: que imprime el if Y que imprime el contador?</b> Traza los dos prints por vuelta.</p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; Texto exacto del print en cada vuelta</div>
+<div class="code">nivel = <span class="nm">10</span>
+ciclo = <span class="nm">1</span>
+
+<span class="kw">while</span> nivel < <span class="nm">25</span>:
+    <span class="kw">if</span> nivel < <span class="nm">15</span>:
+        <span class="fn">print</span>(<span class="st">f"Ciclo {ciclo}: nivel BAJO ({nivel})"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="st">f"Ciclo {ciclo}: nivel MEDIO ({nivel})"</span>)
+    nivel += <span class="nm">8</span>
+    ciclo += <span class="nm">1</span>
+
+<span class="fn">print</span>(<span class="st">f"Objetivo alcanzado. Nivel: {nivel}"</span>)</div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">ciclo=1 nivel=10</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 10 < 25? SI entra | 10 < 15? SI -> if</div>
+<input class="esc-line" id="a7_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">ciclo=2 nivel=18</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 18 < 25? SI entra | 18 < 15? NO -> else</div>
+<input class="esc-line" id="a7_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">ciclo=3 nivel=26</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 26 < 25? NO -> para. nivel=26, ciclo=3</div>
+<input class="esc-line" id="a7_2">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">al final</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Este print esta fuera del while</div>
+<input class="esc-line" id="a7_3">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk7()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a7"></div>
+</div>
+</div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">8</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip ca">while True</span><span class="chip ca">break</span> while True + break — el patron del menu</div>
+<div class="act-tit">El menu que aprendiste hoy — traza cada vuelta</div>
+</div>
+<div class="act-dif d2">Medio</div>
+</div>
+<div class="act-body">
+<p class="enunciado">Este es el patron que vieron hoy en el pizarron. <b>while True corre para siempre hasta que aparece un break.</b> Imagina que el usuario ingresa estas opciones en orden: primero "1", despues "3".</p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; El texto de cada print(). Si hay break, anota "BREAK — sale del while"</div>
+<div class="code"><span class="kw">while</span> <span class="kw">True</span>:
+    <span class="fn">print</span>(<span class="st">"1. Ver temperatura"</span>)
+    <span class="fn">print</span>(<span class="st">"2. Ver humedad"</span>)
+    <span class="fn">print</span>(<span class="st">"3. Salir"</span>)
+    opcion = <span class="fn">input</span>(<span class="st">"Opcion: "</span>)
+
+    <span class="kw">if</span> opcion == <span class="st">"1"</span>:
+        <span class="fn">print</span>(<span class="st">"Temperatura: 22.5 C"</span>)
+    <span class="kw">elif</span> opcion == <span class="st">"2"</span>:
+        <span class="fn">print</span>(<span class="st">"Humedad: 58%"</span>)
+    <span class="kw">elif</span> opcion == <span class="st">"3"</span>:
+        <span class="fn">print</span>(<span class="st">"Saliendo..."</span>)
+        <span class="kw">break</span>
+
+<span class="fn">print</span>(<span class="st">"Sistema apagado."</span>)</div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">vuelta 1 — menu</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Los 3 prints del menu se ejecutan cada vuelta</div>
+<input class="esc-line" id="a8_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">vuelta 1 — opcion=1</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Usuario ingresa "1" -> entra al if</div>
+<input class="esc-line" id="a8_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">vuelta 2 — menu</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; El menu vuelve a mostrarse</div>
+<input class="esc-line" id="a8_2">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">vuelta 2 — opcion=3</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Usuario ingresa "3" -> elif, print, break</div>
+<input class="esc-line" id="a8_3">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">al final</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Este print esta FUERA del while — se ejecuta al salir</div>
+<input class="esc-line" id="a8_4">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk8()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a8"></div>
+</div>
+</div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">9</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip ca">while</span><span class="chip cg">append</span> while + append() — cargar datos</div>
+<div class="act-tit">Registrar lecturas hasta ingresar -1</div>
+</div>
+<div class="act-dif d3">Dificil</div>
+</div>
+<div class="act-body">
+<p class="enunciado">El usuario ingresa temperaturas una por una. Cuando ingresa <b>-1</b> el programa para y muestra el resultado. Imagina que el usuario ingresa en orden: 22.5, 30.0, 18.0, -1.</p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; Estado de la lista "lecturas" despues de cada iteracion | o el print final</div>
+<div class="code">lecturas = []
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    temp = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Temperatura (-1 para terminar): "</span>))
+    <span class="kw">if</span> temp == -<span class="nm">1</span>:
+        <span class="kw">break</span>
+    lecturas.<span class="fn">append</span>(temp)
+
+<span class="fn">print</span>(<span class="st">"Lecturas registradas:"</span>, lecturas)
+<span class="fn">print</span>(<span class="st">"Cantidad:"</span>, <span class="fn">len</span>(lecturas))</div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">temp=22.5</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 22.5 != -1 -> no hace break, hace append</div>
+<input class="esc-line" id="a9_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">temp=30.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 30.0 != -1 -> append</div>
+<input class="esc-line" id="a9_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">temp=18.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 18.0 != -1 -> append</div>
+<input class="esc-line" id="a9_2">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">temp=-1.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; -1 == -1 -> break, no hace append</div>
+<input class="esc-line" id="a9_3">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">print lecturas</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; El -1 no queda en la lista</div>
+<input class="esc-line" id="a9_4">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">print len</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; len() cuenta los 3 valores registrados</div>
+<input class="esc-line" id="a9_5">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk9()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a9"></div>
+</div>
+</div></div>
+</section>
+<section id="h3">
+<div class="hora-hdr hh3"><div class="hora-ico">&#128279;</div><div><div class="hora-tit">Hora 3 &mdash; Integrador</div><div class="hora-sub">4 actividades &middot; while + for juntos &middot; carga y analisis &middot; menu completo</div></div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">10</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip ca">while</span><span class="chip cg">for</span> while + for — menu con lista</div>
+<div class="act-tit">El menu usa un for para mostrar la lista completa</div>
+</div>
+<div class="act-dif d2">Medio</div>
+</div>
+<div class="act-body">
+<p class="enunciado">Dentro del menu hay un for que recorre la lista. <b>El usuario elige la opcion 1. Traza todo lo que imprime el programa en ESA UNICA vuelta del while.</b></p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; Texto exacto de cada print en orden | "nada" si no imprime</div>
+<div class="code">sensores = [<span class="st">"Temp-Living"</span>, <span class="st">"Hum-Cocina"</span>, <span class="st">"CO2-Dormit"</span>]
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="fn">print</span>(<span class="st">"1. Ver sensores"</span>)
+    <span class="fn">print</span>(<span class="st">"2. Salir"</span>)
+    op = <span class="fn">input</span>(<span class="st">">"</span>)
+
+    <span class="kw">if</span> op == <span class="st">"1"</span>:
+        <span class="fn">print</span>(<span class="st">"--- Sensores activos ---"</span>)
+        <span class="kw">for</span> s <span class="kw">in</span> sensores:
+            <span class="fn">print</span>(<span class="st">f"  * {s}"</span>)
+    <span class="kw">elif</span> op == <span class="st">"2"</span>:
+        <span class="kw">break</span></div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">menu</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Los 2 prints del menu al inicio de la vuelta</div>
+<input class="esc-line" id="a10_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">op=1 -&gt; if</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; El print antes del for</div>
+<input class="esc-line" id="a10_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">for s="Temp-Living"</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Primera vuelta del for</div>
+<input class="esc-line" id="a10_2">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">for s="Hum-Cocina"</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Segunda vuelta del for</div>
+<input class="esc-line" id="a10_3">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">for s="CO2-Dormit"</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Tercera vuelta del for — fin del for</div>
+<input class="esc-line" id="a10_4">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">vuelve al while</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; El while sigue hasta que el usuario elija 2</div>
+<input class="esc-line" id="a10_5">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk10()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a10"></div>
+</div>
+</div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">11</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip ca">while</span><span class="chip cg">for</span><span class="chip cg">append</span> while carga — for analiza</div>
+<div class="act-tit">Primero se cargan los datos, despues se analizan</div>
+</div>
+<div class="act-dif d2">Medio</div>
+</div>
+<div class="act-body">
+<p class="enunciado">El while carga datos con append(). El for los analiza. Son dos bucles distintos que trabajan juntos. El usuario ingresa en orden: 15.0, 32.0, 21.0, -1.</p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; Estado de la lista al salir del while | Texto de cada print del for</div>
+<div class="code">datos = []
+
+<span class="cm"># Fase 1: cargar datos con while</span>
+<span class="kw">while</span> <span class="kw">True</span>:
+    x = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Valor (-1 para terminar): "</span>))
+    <span class="kw">if</span> x == -<span class="nm">1</span>:
+        <span class="kw">break</span>
+    datos.<span class="fn">append</span>(x)
+
+<span class="cm"># Fase 2: analizar con for</span>
+<span class="fn">print</span>(<span class="st">f"Se cargaron {len(datos)} valores."</span>)
+<span class="kw">for</span> val <span class="kw">in</span> datos:
+    <span class="kw">if</span> val > <span class="nm">25.0</span>:
+        <span class="fn">print</span>(<span class="st">f"{val} -> ALTO"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="st">f"{val} -> normal"</span>)</div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">lista al salir del while</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; El -1 no entra. Quedan 3 valores.</div>
+<input class="esc-line" id="a11_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">print len</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; len(datos) = 3</div>
+<input class="esc-line" id="a11_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">for val=15.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 15.0 > 25? NO -> else</div>
+<input class="esc-line" id="a11_2">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">for val=32.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 32.0 > 25? SI -> if</div>
+<input class="esc-line" id="a11_3">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">for val=21.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 21.0 > 25? NO -> else</div>
+<input class="esc-line" id="a11_4">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk11()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a11"></div>
+</div>
+</div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">12</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip ca">while</span><span class="chip cg">for</span> Encontrar el error — for vs while</div>
+<div class="act-tit">Codigo con trampa — este programa nunca termina</div>
+</div>
+<div class="act-dif d3">Dificil</div>
+</div>
+<div class="act-body">
+<p class="enunciado">Este codigo <b>tiene un error logico grave</b>. El programador quiso hacer un menu que se muestre mientras el usuario no elija "3". Pero hay algo mal que hace que el programa nunca pueda terminar. Encontralo y propone la correccion.</p>
+<div class="code">opcion = <span class="st">"0"</span>
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">10</span>):   <span class="cm"># ERROR ACA</span>
+    <span class="fn">print</span>(<span class="st">"1. Ver temperatura"</span>)
+    <span class="fn">print</span>(<span class="st">"2. Ver humedad"</span>)
+    <span class="fn">print</span>(<span class="st">"3. Salir"</span>)
+    opcion = <span class="fn">input</span>(<span class="st">"Opcion: "</span>)
+
+    <span class="kw">if</span> opcion == <span class="st">"1"</span>:
+        <span class="fn">print</span>(<span class="st">"Temperatura: 22.5 C"</span>)
+    <span class="kw">elif</span> opcion == <span class="st">"2"</span>:
+        <span class="fn">print</span>(<span class="st">"Humedad: 58%"</span>)
+    <span class="kw">elif</span> opcion == <span class="st">"3"</span>:
+        <span class="fn">print</span>(<span class="st">"Saliendo..."</span>)</div>
+<div class="escritorio">
+<div class="esc-lbl">Analiz&aacute; el error en el papel, luego escribi tu respuesta</div>
+<p style="font-size:13px;color:var(--muted);margin-bottom:6px;">Que hace mal? Cual es la consecuencia? Como se corrige?</p>
+<textarea class="resp-area" rows="5" placeholder="El error es que...&#10;La consecuencia es que...&#10;Para corregirlo hay que..."></textarea>
+<br><button class="reveal-btn" onclick="revelar('sol_a12')">&#128065; Ver solucion</button>
+<div class="solucion" id="sol_a12">El ERROR es que uso "for i in range(10)" en lugar de "while True".
+
+Consecuencias del error:
+  - El for hace exactamente 10 repeticiones, sin importar lo que el usuario elija.
+  - Si el usuario elige "3", imprime "Saliendo..." pero el for SIGUE igual.
+  - No hay forma de salir antes de las 10 vueltas.
+
+CORRECCION: reemplazar el for por while True + break:
+
+while True:                    # en lugar de for i in range(10)
+    print("1. Ver temperatura")
+    ...
+    elif opcion == "3":
+        print("Saliendo...")
+        break                  # agregar el break para salir
+
+El menu no tiene un numero fijo de repeticiones.
+Un "for" se usa cuando sabes CUANTAS veces repetir.
+Un "while" se usa cuando dependes de una CONDICION.</div>
+</div>
+</div></div>
+<div class="act">
+<div class="act-hdr">
+<div class="act-num">13</div>
+<div class="act-meta">
+<div class="act-tag"><span class="chip ca">while</span><span class="chip cg">for</span><span class="chip cg">append</span> Sistema completo — menu + registro + analisis</div>
+<div class="act-tit">La maqueta con menu, registro y reporte</div>
+</div>
+<div class="act-dif d3">Jefe</div>
+</div>
+<div class="act-body">
+<p class="enunciado">El sistema tiene menu, carga datos con while y los analiza con for. <b>El usuario hace esto en orden:</b> elige 1 -> ingresa 30.5 y 20.0 y -1 -> despues elige 2 -> despues elige 3. Traza SOLO lo que imprime en ese recorrido.</p>
+<div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; Texto exacto de cada print() en el orden que aparece | "nada" si no imprime</div>
+<div class="code">registros = []
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="fn">print</span>(<span class="st">"1. Cargar temperatura"</span>)
+    <span class="fn">print</span>(<span class="st">"2. Ver reporte"</span>)
+    <span class="fn">print</span>(<span class="st">"3. Salir"</span>)
+    op = <span class="fn">input</span>(<span class="st">">"</span>)
+
+    <span class="kw">if</span> op == <span class="st">"1"</span>:
+        t = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Temp: "</span>))
+        <span class="kw">while</span> t != -<span class="nm">1</span>:
+            registros.<span class="fn">append</span>(t)
+            t = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Temp: "</span>))
+        <span class="fn">print</span>(<span class="st">f"{len(registros)} registro(s) guardado(s)."</span>)
+
+    <span class="kw">elif</span> op == <span class="st">"2"</span>:
+        <span class="fn">print</span>(<span class="st">"--- Reporte ---"</span>)
+        <span class="kw">for</span> r <span class="kw">in</span> registros:
+            <span class="fn">print</span>(<span class="st">f"  {r} C"</span>)
+
+    <span class="kw">elif</span> op == <span class="st">"3"</span>:
+        <span class="fn">print</span>(<span class="st">"Sistema apagado."</span>)
+        <span class="kw">break</span></div>
+<div class="escritorio">
+<div class="esc-lbl">Traz&aacute; en el papel y complet&aacute; la salida</div>
+<div class="esc-grid">
+<div class="esc-row">
+<div class="esc-step">menu (1ra vez)</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; El menu se muestra al inicio de cada vuelta del while externo</div>
+<input class="esc-line" id="a13_0">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">op=1 -&gt; ingresa 30.5</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 30.5 != -1 -> append(30.5)</div>
+<input class="esc-line" id="a13_1">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">op=1 -&gt; ingresa 20.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; 20.0 != -1 -> append(20.0)</div>
+<input class="esc-line" id="a13_2">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">op=1 -&gt; ingresa -1</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; -1 == -1 -> sale del while interno</div>
+<input class="esc-line" id="a13_3">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">menu (2da vez)</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; El while externo vuelve al menu</div>
+<input class="esc-line" id="a13_4">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">op=2 -&gt; reporte</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; El print del encabezado del reporte</div>
+<input class="esc-line" id="a13_5">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">for r=30.5</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Primera vuelta del for</div>
+<input class="esc-line" id="a13_6">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">for r=20.0</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Segunda vuelta del for</div>
+<input class="esc-line" id="a13_7">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">menu (3ra vez)</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; El while externo vuelve al menu</div>
+<input class="esc-line" id="a13_8">
+</div>
+</div>
+<div class="esc-row">
+<div class="esc-step">op=3 -&gt; break</div>
+<div class="esc-col">
+<div class="esc-hint">&#8627; Imprime y ejecuta el break</div>
+<input class="esc-line" id="a13_9">
+</div>
+</div>
+</div>
+<button class="check-btn" onclick="chk13()">&#10003; Verificar</button>
+<div class="esc-fb" id="fb_a13"></div>
+</div>
+</div></div>
+</section>
+</main>
+<footer>
+  Taller de Programaci&oacute;n &middot; 3&deg; 2&deg; &middot;
+  <b>Escuela Industrial N&deg;9 "15 de Noviembre" &middot; El Calafate</b><br>
+  <b>Prof. Pablo Limardo &middot; Departamento ACPI &middot; Ciclo 2026</b>
+</footer>
+
+<script>
+var SECS=['h1','h2','h3'];
+function ir(id){var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+window.addEventListener('scroll',function(){
+  for(var j=SECS.length-1;j>=0;j--){
+    var el=document.getElementById(SECS[j]);
+    if(el&&el.getBoundingClientRect().top<=110){
+      document.querySelectorAll('.nb').forEach(function(b){
+        b.classList.toggle('on',b.getAttribute('data-sec')===SECS[j]);
+      });break;
+    }
+  }
+});
+function revelar(id){document.getElementById(id).classList.toggle('show');}
+function fb(id,ok,msg){var el=document.getElementById(id);el.className='esc-fb show '+(ok?'fb-ok':'fb-mal');el.textContent=msg;}
+function norm(s){return String(s).trim().toLowerCase().replace(/\s+/g,' ').replace(/[\[\]'"]/g,'');}
+function chk1(){
+  var ans=[];
+  ans.push(document.getElementById('a1_0').value);
+  ans.push(document.getElementById('a1_1').value);
+  ans.push(document.getElementById('a1_2').value);
+  ans.push(document.getElementById('a1_3').value);
+  ans.push(document.getElementById('a1_4').value);
+  var ok=[];
+  ok.push('Revisando: Living');
+  ok.push('Revisando: Cocina');
+  ok.push('Revisando: Dormitorio');
+  ok.push('Revisando: Bano');
+  ok.push('Recorrido completo.');
+  var errors=[];
+  ok.forEach(function(v,i){
+    if(norm(ans[i])!==norm(v)) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a1',true,'Correcto. El for ejecuta el bloque una vez por cada elemento de la lista. El print de "Recorrido completo." esta fuera del for (sin sangria), por eso se ejecuta una sola vez al terminar.');
+  else fb('fb_a1',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+function chk2(){
+  var ans=[];
+  ans.push(document.getElementById('a2_0').value);
+  ans.push(document.getElementById('a2_1').value);
+  ans.push(document.getElementById('a2_2').value);
+  ans.push(document.getElementById('a2_3').value);
+  ans.push(document.getElementById('a2_4').value);
+  var ok=[];
+  ok.push('nada');
+  ok.push('ALARMA: 31.0 grados');
+  ok.push('nada');
+  ok.push('ALARMA: 28.5 grados');
+  ok.push('Total alarmas: 2');
+  var errors=[];
+  ok.forEach(function(v,i){
+    var av=norm(ans[i]);var ov=norm(v);var match=av===ov;
+    if(!match){
+      var parts=ov.split(" ").filter(function(p){return p.length>2;});
+      if(parts.length>0) match=parts.every(function(p){return av.indexOf(p)!==-1;});
+    }
+    if(!match) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a2',true,'Correcto. Solo 31.0 y 28.5 superan el limite de 25.0. El acumulador "alarmas" arranca en 0 y suma 1 cada vez que el if se cumple. Al final vale 2.');
+  else fb('fb_a2',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+function chk3(){
+  var ans=[];
+  ans.push(document.getElementById('a3_0').value);
+  ans.push(document.getElementById('a3_1').value);
+  ans.push(document.getElementById('a3_2').value);
+  var ok=[];
+  ok.push('14.5: FRIO');
+  ok.push('22.0: CONFORT');
+  ok.push('30.5: CALOR');
+  var errors=[];
+  ok.forEach(function(v,i){
+    if(norm(ans[i])!==norm(v)) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a3',true,'Correcto. Si el if se cumple, elif y else se saltan completamente. Si el if no se cumple pero el elif si, else se salta. Solo uno de los tres bloques ejecuta por vuelta.');
+  else fb('fb_a3',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+function chk4(){
+  var ans=[];
+  ans.push(document.getElementById('a4_0').value);
+  ans.push(document.getElementById('a4_1').value);
+  ans.push(document.getElementById('a4_2').value);
+  ans.push(document.getElementById('a4_3').value);
+  ans.push(document.getElementById('a4_4').value);
+  ans.push(document.getElementById('a4_5').value);
+  var ok=[];
+  ok.push('[]');
+  ok.push('[31.5]');
+  ok.push('[31.5]');
+  ok.push('[31.5, 29.8]');
+  ok.push('Zonas calientes: [31.5, 29.8]');
+  ok.push('Cantidad: 2');
+  var errors=[];
+  ok.forEach(function(v,i){
+    var av=norm(ans[i]);var ov=norm(v);var match=av===ov;
+    if(!match){
+      var parts=ov.split(" ").filter(function(p){return p.length>2;});
+      if(parts.length>0) match=parts.every(function(p){return av.indexOf(p)!==-1;});
+    }
+    if(!match) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a4',true,'Correcto. append() agrega al final de la lista solo cuando el if se cumple. La lista arranca vacia [] y crece con cada temperatura que supera 27.0. Al final len(calientes) da 2.');
+  else fb('fb_a4',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+function chk5(){
+  var ans=[];
+  ans.push(document.getElementById('a5_0').value);
+  ans.push(document.getElementById('a5_1').value);
+  ans.push(document.getElementById('a5_2').value);
+  ans.push(document.getElementById('a5_3').value);
+  ans.push(document.getElementById('a5_4').value);
+  ans.push(document.getElementById('a5_5').value);
+  ans.push(document.getElementById('a5_6').value);
+  ans.push(document.getElementById('a5_7').value);
+  var ok=[];
+  ok.push('total = 0');
+  ok.push('total = 20.0');
+  ok.push('total = 42.5');
+  ok.push('total = 62.0');
+  ok.push('total = 86.0');
+  ok.push('Total: 86.0');
+  ok.push('Cantidad: 4');
+  ok.push('Promedio: 21.5');
+  var errors=[];
+  ok.forEach(function(v,i){
+    var av=norm(ans[i]);var ov=norm(v);var match=av===ov;
+    if(!match){
+      var parts=ov.split(" ").filter(function(p){return p.length>2;});
+      if(parts.length>0) match=parts.every(function(p){return av.indexOf(p)!==-1;});
+    }
+    if(!match) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a5',true,'Correcto. El acumulador "total" arranca en 0 y en cada vuelta suma el valor actual de t. Al terminar el for: total = 86.0. Promedio = 86.0 / 4 = 21.5.');
+  else fb('fb_a5',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+function chk6(){
+  var ans=[];
+  ans.push(document.getElementById('a6_0').value);
+  ans.push(document.getElementById('a6_1').value);
+  ans.push(document.getElementById('a6_2').value);
+  ans.push(document.getElementById('a6_3').value);
+  var ok=[];
+  ok.push('Bomba ON — nivel actual: 3');
+  ok.push('Bomba ON — nivel actual: 5');
+  ok.push('(sale del while)');
+  ok.push('Bomba OFF — nivel final: 7');
+  var errors=[];
+  ok.forEach(function(v,i){
+    var av=norm(ans[i]);var ov=norm(v);var match=av===ov;
+    if(!match){
+      var parts=ov.split(" ").filter(function(p){return p.length>2;});
+      if(parts.length>0) match=parts.every(function(p){return av.indexOf(p)!==-1;});
+    }
+    if(!match) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a6',true,'Correcto. El while ejecuta 2 veces (cuando nivel vale 3 y cuando vale 5). Cuando nivel llega a 7, la condicion 7 < 7 es False y el while para. El print de "Bomba OFF" esta fuera del while.');
+  else fb('fb_a6',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+function chk7(){
+  var ans=[];
+  ans.push(document.getElementById('a7_0').value);
+  ans.push(document.getElementById('a7_1').value);
+  ans.push(document.getElementById('a7_2').value);
+  ans.push(document.getElementById('a7_3').value);
+  var ok=[];
+  ok.push('Ciclo 1: nivel BAJO (10)');
+  ok.push('Ciclo 2: nivel MEDIO (18)');
+  ok.push('(sale del while)');
+  ok.push('Objetivo alcanzado. Nivel: 26');
+  var errors=[];
+  ok.forEach(function(v,i){
+    var av=norm(ans[i]);var ov=norm(v);var match=av===ov;
+    if(!match){
+      var parts=ov.split(" ").filter(function(p){return p.length>2;});
+      if(parts.length>0) match=parts.every(function(p){return av.indexOf(p)!==-1;});
+    }
+    if(!match) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a7',true,'Correcto. Vuelta 1: nivel=10, entra al if (10<15). Vuelta 2: nivel=10+8=18, entra al else (18>=15). Despues de la vuelta 2: nivel=18+8=26. La condicion 26<25 es False, el while para.');
+  else fb('fb_a7',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+function chk8(){
+  var ans=[];
+  ans.push(document.getElementById('a8_0').value);
+  ans.push(document.getElementById('a8_1').value);
+  ans.push(document.getElementById('a8_2').value);
+  ans.push(document.getElementById('a8_3').value);
+  ans.push(document.getElementById('a8_4').value);
+  var ok=[];
+  ok.push('1. Ver temperatura / 2. Ver humedad / 3. Salir');
+  ok.push('Temperatura: 22.5 C');
+  ok.push('1. Ver temperatura / 2. Ver humedad / 3. Salir');
+  ok.push('Saliendo... / BREAK — sale del while');
+  ok.push('Sistema apagado.');
+  var errors=[];
+  ok.forEach(function(v,i){
+    var av=norm(ans[i]);var ov=norm(v);var match=av===ov;
+    if(!match){
+      var parts=ov.split(" ").filter(function(p){return p.length>2;});
+      if(parts.length>0) match=parts.every(function(p){return av.indexOf(p)!==-1;});
+    }
+    if(!match) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a8',true,'Correcto. while True corre infinitamente hasta que el break lo detiene. El menu se muestra al principio de cada vuelta. La opcion 3 imprime "Saliendo...", ejecuta el break y sale. El print de "Sistema apagado." esta fuera del while.');
+  else fb('fb_a8',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+function chk9(){
+  var ans=[];
+  ans.push(document.getElementById('a9_0').value);
+  ans.push(document.getElementById('a9_1').value);
+  ans.push(document.getElementById('a9_2').value);
+  ans.push(document.getElementById('a9_3').value);
+  ans.push(document.getElementById('a9_4').value);
+  ans.push(document.getElementById('a9_5').value);
+  var ok=[];
+  ok.push('[22.5]');
+  ok.push('[22.5, 30.0]');
+  ok.push('[22.5, 30.0, 18.0]');
+  ok.push('BREAK — sale del while');
+  ok.push('Lecturas registradas: [22.5, 30.0, 18.0]');
+  ok.push('Cantidad: 3');
+  var errors=[];
+  ok.forEach(function(v,i){
+    var av=norm(ans[i]);var ov=norm(v);var match=av===ov;
+    if(!match){
+      var parts=ov.split(" ").filter(function(p){return p.length>2;});
+      if(parts.length>0) match=parts.every(function(p){return av.indexOf(p)!==-1;});
+    }
+    if(!match) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a9',true,'Correcto. El -1 activa el break ANTES de llegar al append(). Por eso el -1 no queda en la lista. La lista tiene solo los 3 valores validos. len() devuelve 3.');
+  else fb('fb_a9',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+function chk10(){
+  var ans=[];
+  ans.push(document.getElementById('a10_0').value);
+  ans.push(document.getElementById('a10_1').value);
+  ans.push(document.getElementById('a10_2').value);
+  ans.push(document.getElementById('a10_3').value);
+  ans.push(document.getElementById('a10_4').value);
+  ans.push(document.getElementById('a10_5').value);
+  var ok=[];
+  ok.push('1. Ver sensores / 2. Salir');
+  ok.push('--- Sensores activos ---');
+  ok.push('  * Temp-Living');
+  ok.push('  * Hum-Cocina');
+  ok.push('  * CO2-Dormit');
+  ok.push('(vuelve a mostrar el menu)');
+  var errors=[];
+  ok.forEach(function(v,i){
+    var av=norm(ans[i]);var ov=norm(v);var match=av===ov;
+    if(!match){
+      var parts=ov.split(" ").filter(function(p){return p.length>2;});
+      if(parts.length>0) match=parts.every(function(p){return av.indexOf(p)!==-1;});
+    }
+    if(!match) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a10',true,'Correcto. El for esta adentro del if, que esta adentro del while. Con op=1: primero imprime el encabezado, despues el for imprime cada sensor. Al terminar el for, el while vuelve desde el principio y muestra el menu de nuevo.');
+  else fb('fb_a10',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+function chk11(){
+  var ans=[];
+  ans.push(document.getElementById('a11_0').value);
+  ans.push(document.getElementById('a11_1').value);
+  ans.push(document.getElementById('a11_2').value);
+  ans.push(document.getElementById('a11_3').value);
+  ans.push(document.getElementById('a11_4').value);
+  var ok=[];
+  ok.push('[15.0, 32.0, 21.0]');
+  ok.push('Se cargaron 3 valores.');
+  ok.push('15.0 -> normal');
+  ok.push('32.0 -> ALTO');
+  ok.push('21.0 -> normal');
+  var errors=[];
+  ok.forEach(function(v,i){
+    var av=norm(ans[i]);var ov=norm(v);var match=av===ov;
+    if(!match){
+      var parts=ov.split(" ").filter(function(p){return p.length>2;});
+      if(parts.length>0) match=parts.every(function(p){return av.indexOf(p)!==-1;});
+    }
+    if(!match) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a11',true,'Correcto. El while carga 3 valores (el -1 no entra por el break antes del append). El for analiza los 3 valores: 15.0 y 21.0 son normales, 32.0 es ALTO.');
+  else fb('fb_a11',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+
+function chk13(){
+  var ans=[];
+  ans.push(document.getElementById('a13_0').value);
+  ans.push(document.getElementById('a13_1').value);
+  ans.push(document.getElementById('a13_2').value);
+  ans.push(document.getElementById('a13_3').value);
+  ans.push(document.getElementById('a13_4').value);
+  ans.push(document.getElementById('a13_5').value);
+  ans.push(document.getElementById('a13_6').value);
+  ans.push(document.getElementById('a13_7').value);
+  ans.push(document.getElementById('a13_8').value);
+  ans.push(document.getElementById('a13_9').value);
+  var ok=[];
+  ok.push('1. Cargar temperatura / 2. Ver reporte / 3. Salir');
+  ok.push('(nada — solo carga el dato)');
+  ok.push('(nada — solo carga el dato)');
+  ok.push('2 registro(s) guardado(s).');
+  ok.push('1. Cargar temperatura / 2. Ver reporte / 3. Salir');
+  ok.push('--- Reporte ---');
+  ok.push('  30.5 C');
+  ok.push('  20.0 C');
+  ok.push('1. Cargar temperatura / 2. Ver reporte / 3. Salir');
+  ok.push('Sistema apagado.');
+  var errors=[];
+  ok.forEach(function(v,i){
+    var av=norm(ans[i]);var ov=norm(v);var match=av===ov;
+    if(!match){
+      var parts=ov.split(" ").filter(function(p){return p.length>2;});
+      if(parts.length>0) match=parts.every(function(p){return av.indexOf(p)!==-1;});
+    }
+    if(!match) errors.push("Casilla "+(i+1)+": esperaba -> "+v);
+  });
+  if(errors.length===0) fb('fb_a13',true,'Correcto. Sistema completo:\n- El while externo maneja el menu.\n- El while interno (op=1) carga datos hasta -1.\n- El for (op=2) analiza la lista registros.\n- El break (op=3) termina el while externo.\nregistros = [30.5, 20.0] al momento del reporte.');
+  else fb('fb_a13',false,'Hay '+errors.length+' error(es):\n'+errors.join('\n'));
+}
+function toggleTheme(){
+  var dark=document.documentElement.getAttribute('data-theme')==='dark';
+  if(dark){document.documentElement.removeAttribute('data-theme');
+    document.getElementById('themeBtn').textContent='\u263a Oscuro';
+    localStorage.setItem('tProg3','light');
+  }else{
+    document.documentElement.setAttribute('data-theme','dark');
+    document.getElementById('themeBtn').textContent='\u2600\ufe0f Claro';
+    localStorage.setItem('tProg3','dark');
+  }
+}
+if(localStorage.getItem('tProg3')==='dark'){
+  document.documentElement.setAttribute('data-theme','dark');
+  document.getElementById('themeBtn').textContent='\u2600\ufe0f Claro';
+}
+</script>
+</body>
+</html>
