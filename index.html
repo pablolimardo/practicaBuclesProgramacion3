@@ -163,7 +163,7 @@ section{break-inside:avoid;}.hora-hdr{background:#333!important;}}
 <div class="act-body">
 <p class="enunciado">La maqueta tiene cuatro zonas. El for recorre la lista e imprime cada una. <b>Anota en el papel que imprime en cada vuelta</b> y cuantas veces ejecuta el print().</p>
 <div class="fmt-hint">&#128221; <b>Formato:</b>&nbsp; El texto exacto que imprime cada vuelta del for</div>
-<div class="code">zonas = [<span class="st">"Living"</span>, <span class="st">"Cocina"</span>, <span class="st">"Dormitorio"</span>, <span class="st">"Bano"</span>]
+<div class="code">zonas = [<span class="st">"Living"</span>, <span class="st">"Cocina"</span>, <span class="st">"Dormitorio"</span>, <span class="st">"baño"</span>]
 
 <span class="kw">for</span> zona <span class="kw">in</span> zonas:
     <span class="fn">print</span>(<span class="st">f"Revisando: {zona}"</span>)
@@ -194,7 +194,7 @@ section{break-inside:avoid;}.hora-hdr{background:#333!important;}}
 <div class="esc-row">
 <div class="esc-step">vuelta 4</div>
 <div class="esc-col">
-<div class="esc-hint">&#8627; zona vale "Bano" en la ultima vuelta</div>
+<div class="esc-hint">&#8627; zona vale "Baño" en la ultima vuelta</div>
 <input class="esc-line" id="a1_3">
 </div>
 </div>
@@ -1091,7 +1091,7 @@ function chk1(){
   ok.push('Revisando: Living');
   ok.push('Revisando: Cocina');
   ok.push('Revisando: Dormitorio');
-  ok.push('Revisando: Bano');
+  ok.push('Revisando: Baño');
   ok.push('Recorrido completo.');
   var errors=[];
   ok.forEach(function(v,i){
